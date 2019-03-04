@@ -1,0 +1,46 @@
+
+<form [formGroup]="cardDetailsForm" (ngSubmit)="onSubmit(cardDetailsForm.value)" #cardForm="ngForm">
+
+<div class="form-container">
+
+  <h1>Credit Card System</h1>
+
+  <mat-form-field>
+    <input matInput placeholder="Name" formControlName="name" required>
+    <mat-error *ngIf="name?.invalid">Name Required</mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field>
+    <input matInput placeholder="Card Number" formControlName="cardNumber" required>
+    <mat-error *ngIf="cardNumber?.invalid">Card Number required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Limit" formControlName="cardLimit" required>
+    <mat-error *ngIf="cardLimit?.invalid">Limit required</mat-error>
+  </mat-form-field>
+  <button type="submit" [disabled]="!cardDetailsForm.valid" style="width:50px">Add</button>
+
+</div>
+
+
+</form>
+
+<div class="errors" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+
+
+<div class="table-container">
+<h2>Existing Cards</h2>
+
+<mat-table #table [dataSource]="dataSource" matSort>
+  <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> {{column.value}} </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element[column.id]}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+</div>
